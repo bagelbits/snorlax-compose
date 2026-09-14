@@ -1,0 +1,74 @@
+---
+services:
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    depends_on:
+      - auth
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=America/Los_Angeles
+    volumes:
+      - /opt/dockerapps/radarr:/config
+      - /media/movies:/movies #optional
+      - /media/torrents:/torrents
+    restart: unless-stopped
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    depends_on:
+      - auth
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=America/Los_Angeles
+    volumes:
+      - /opt/dockerapps/sonarr:/config
+      - /media/anime:/anime #optional
+      - /media/tv:/tv #optional
+      - /media/torrents:/torrents #optional
+    restart: unless-stopped
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    depends_on:
+      - auth
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=America/Los_Angeles
+      - WEBUI_PORT=8123
+      - TORRENTING_PORT=6881
+    volumes:
+      - /opt/dockerapps/qbittorrent:/config
+      - /media/torrents:/torrents
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+  prowlarr:
+    image: linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=America/Los_Angeles
+    volumes:
+      - /opt/dockerapps/prowlarr:/config
+    restart: unless-stopped
+  bazarr:
+    image: linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=America/Los_Angeles
+    volumes:
+      - /opt/dockerapps/bazarr:/config
+      - /media/anime:/anime #optional
+      - /media/tv:/tv #optional
+      - /media/movies:/movies #optional
+    ports:
+      - 6767:6767
+    restart: unless-stopped

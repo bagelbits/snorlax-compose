@@ -1,0 +1,40 @@
+---
+name: "media"
+services:
+  plex:
+    image: linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    volumes:
+      - /opt/dockerapps/plex:/config
+      - /media/tv:/tv
+      - /media/movies:/movies
+      - /media/anime:/anime
+      - /media/music:/music
+    restart: unless-stopped
+  tautulli:
+    image: linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=America/Los_Angeles
+    volumes:
+      - /opt/dockerapps/tautulli:/config
+    restart: unless-stopped
+  overseerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=America/Los_Angeles
+    volumes:
+      - /opt/dockerapps/overseerr:/app/config
+    restart: unless-stopped

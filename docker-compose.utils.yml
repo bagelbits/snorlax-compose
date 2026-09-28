@@ -13,13 +13,12 @@ services:
       - HOMEPAGE_ALLOWED_HOSTS=snorlax.media
     restart: unless-stopped
   watchtower:
-    image: beatkind/watchtower
+    image: ghcr.io/nicholas-fedor/watchtower
     container_name: watchtower
     user: 0:0
     environment:
-      - DOCKER_API_VERSION=1.44
       - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_HTTP_API_METRICS=true
+      - WATCHTOWER_HTTP_API_ENDPOINTS=metrics
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN}
       - WATCHTOWER_REMOVE_VOLUMES=true
       - WATCHTOWER_INCLUDE_STOPPED=true

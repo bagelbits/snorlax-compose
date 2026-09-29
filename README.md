@@ -20,7 +20,6 @@ from a local .env file at deploy time.
 
    - MY_DOMAIN                 - Caddy's domain, e.g. snorlax.media
    - POSTGRES_PASSWORD         - Postgres + Authelia storage
-   - REDIS_PASSWORD            - Redis + Authelia session store
    - PLEX_CLAIM                - one-time claim token from plex.tv/claim, expires in ~4 min
    - WATCHTOWER_HTTP_API_TOKEN - Watchtower's HTTP API
    - SONARR_API_KEY            - copy from Sonarr's Settings > General
@@ -41,3 +40,4 @@ from a local .env file at deploy time.
 Authelia's own secrets (JWT/session/storage keys, SMTP password) aren't in
 .env - they're file-based (AUTHELIA_*_FILE vars pointing under
 /opt/dockerapps/authelia/config/secrets/), managed on the host directly.
+Redis reads its password from the same REDIS_PASSWORD file Authelia uses.

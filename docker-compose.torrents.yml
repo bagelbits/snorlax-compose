@@ -11,8 +11,6 @@ services:
     volumes:
       - /opt/dockerapps/radarr:/config
       - /media:/media
-      - /media/movies:/movies #optional
-      - /media/torrents:/torrents
     restart: unless-stopped
   sonarr:
     image: linuxserver/sonarr:latest
@@ -25,9 +23,6 @@ services:
     volumes:
       - /opt/dockerapps/sonarr:/config
       - /media:/media
-      - /media/anime:/anime #optional
-      - /media/tv:/tv #optional
-      - /media/torrents:/torrents #optional
     restart: unless-stopped
   qbittorrent:
     image: linuxserver/qbittorrent:latest
@@ -41,7 +36,6 @@ services:
     volumes:
       - /opt/dockerapps/qbittorrent:/config
       - /media/torrents:/media/torrents
-      - /media/torrents:/torrents
     ports:
       - 6881:6881
       - 6881:6881/udp
@@ -69,7 +63,4 @@ services:
       - /media/anime:/media/anime
       - /media/tv:/media/tv
       - /media/movies:/media/movies
-      - /media/anime:/anime #optional
-      - /media/tv:/tv #optional
-      - /media/movies:/movies #optional
     restart: unless-stopped

@@ -11,7 +11,7 @@ services:
     environment:
       - LOG_LEVEL=debug
       - TZ=America/Los_Angeles
-      - HOMEPAGE_ALLOWED_HOSTS=snorlax.media
+      - HOMEPAGE_ALLOWED_HOSTS=${MY_DOMAIN}
     restart: unless-stopped
   watchtower:
     image: ghcr.io/nicholas-fedor/watchtower
@@ -80,7 +80,7 @@ services:
     restart: always
     pid: host
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       # Uncomment the below line if you want glances to display host OS detail instead of container's
       - /etc/os-release:/etc/os-release:ro
       - /opt/dockerapps/glances:/glances/conf

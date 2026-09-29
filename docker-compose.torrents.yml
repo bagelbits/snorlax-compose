@@ -24,6 +24,7 @@ services:
       - PUID=1000
       - PGID=1002
       - TZ=America/Los_Angeles
+      - SONARR__SERVER__ALLOWEDHOSTS=sonarr,sonarr.${MY_DOMAIN}
     volumes:
       - /opt/dockerapps/sonarr:/config
       - /media/anime:/anime #optional

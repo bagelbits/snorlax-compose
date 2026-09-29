@@ -44,3 +44,10 @@ Authelia's own secrets (JWT/session/storage keys, SMTP password) aren't in
 .env - they're file-based (AUTHELIA_*_FILE vars pointing under
 /opt/dockerapps/authelia/config/secrets/), managed on the host directly.
 Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
+
+## Scripts
+
+One-off helpers in scripts/, run inside a container with python3. Each
+prints a plan by default; pass --apply to act. See --help for usage.
+
+- qbit-fix-paths.py - repoint qBittorrent torrents from /torrents to /media/torrents

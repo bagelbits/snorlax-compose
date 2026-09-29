@@ -3,8 +3,6 @@ services:
   radarr:
     image: linuxserver/radarr:latest
     container_name: radarr
-    depends_on:
-      - auth
     environment:
       - PUID=1000
       - PGID=1002
@@ -18,8 +16,6 @@ services:
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
-    depends_on:
-      - auth
     environment:
       - PUID=1000
       - PGID=1002
@@ -34,8 +30,6 @@ services:
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
-    depends_on:
-      - auth
     environment:
       - PUID=1000
       - PGID=1002

@@ -1,0 +1,6 @@
+name: media
+include:
+  - docker-compose.auth.yml
+  - docker-compose.media.yml
+  - docker-compose.torrents.yml
+  - docker-compose.utils.yml

@@ -10,13 +10,15 @@ services:
       - /media:/media
     environment:
       - LOG_LEVEL=debug
-      - HOMEPAGE_ALLOWED_HOSTS=snorlax.media
+      - TZ=America/Los_Angeles
+      - HOMEPAGE_ALLOWED_HOSTS=${MY_DOMAIN}
     restart: unless-stopped
   watchtower:
     image: ghcr.io/nicholas-fedor/watchtower
     container_name: watchtower
     user: 0:0
     environment:
+      - TZ=America/Los_Angeles
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_HTTP_API_ENDPOINTS=metrics
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN}
@@ -30,46 +32,22 @@ services:
     image: golift/unpackerr
     container_name: unpackerr
     volumes:
-      # You need at least this one volume mapped so Unpackerr can find your files to extract.
-      # Make sure this matches your Starr apps; the folder mount (/downloads or /data) should be identical.
       - /media/torrents:/torrents
-    restart: always
-    # Get the user:group correct so unpackerr can read and write to your files.
+    restart: unless-stopped
     user: 1000:1002
-    # What you see below are defaults for this compose. You only need to modify things specific to your environment.
-    # Remove apps and feature configs you do not use or need.
-    # ie. Remove all lines that begin with UN_CMDHOOK, UN_WEBHOOK, UN_FOLDER, UN_WEBSERVER, and other apps you do not use.
     environment:
       - TZ=America/Los_Angeles
-      # General config
-      - UN_DEBUG=false
-      - UN_LOG_FILE=
-      - UN_LOG_FILES=10
-      - UN_LOG_FILE_MB=10
-      - UN_INTERVAL=2m
       - UN_START_DELAY=10s
       - UN_RETRY_DELAY=2m
       - UN_MAX_RETRIES=3
-      - UN_PARALLEL=1
-      - UN_FILE_MODE=0644
-      - UN_DIR_MODE=0755
-      # Sonarr Config
       - UN_SONARR_0_URL=http://sonarr:8989
       - UN_SONARR_0_API_KEY=${SONARR_API_KEY}
       - UN_SONARR_0_PATHS_0=/torrents
       - UN_SONARR_0_PROTOCOLS=torrent
-      - UN_SONARR_0_TIMEOUT=10s
-      - UN_SONARR_0_DELETE_ORIG=false
-      - UN_SONARR_0_DELETE_DELAY=5m
-      # Radarr Config
       - UN_RADARR_0_URL=http://radarr:7878
       - UN_RADARR_0_API_KEY=${RADARR_API_KEY}
       - UN_RADARR_0_PATHS_0=/torrents
       - UN_RADARR_0_PROTOCOLS=torrent
-      - UN_RADARR_0_TIMEOUT=10s
-      - UN_RADARR_0_DELETE_ORIG=false
-      - UN_RADARR_0_DELETE_DELAY=5m
-
     security_opt:
       - no-new-privileges:true
   monitoring:
@@ -78,12 +56,13 @@ services:
     restart: always
     pid: host
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       # Uncomment the below line if you want glances to display host OS detail instead of container's
       - /etc/os-release:/etc/os-release:ro
       - /opt/dockerapps/glances:/glances/conf
     environment:
       - "GLANCES_OPT=-w"
+      - TZ=America/Los_Angeles
   scrutiny:
     image: ghcr.io/analogj/scrutiny:master-omnibus
     container_name: scrutiny
@@ -94,7 +73,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1002
-      - TZ=Europe/London
+      - TZ=America/Los_Angeles
     volumes:
       - /opt/dockerapps/scrutiny/config:/opt/scrutiny/config
       - /opt/dockerapps/scrutiny/influxdb:/opt/scrutiny/influxdb
@@ -114,14 +93,12 @@ services:
     volumes:
       - /opt/dockerapps/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-  flaresolverr:
-    # DockerHub mirror flaresolverr/flaresolverr:latest
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: flaresolverr
     environment:
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-      - LOG_HTML=${LOG_HTML:-false}
-      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=Europe/London
+      - TZ=America/Los_Angeles
+    restart: unless-stopped
+  byparr:
+    image: ghcr.io/thephaseless/byparr:latest
+    container_name: byparr
+    environment:
+      - TZ=America/Los_Angeles
     restart: unless-stopped

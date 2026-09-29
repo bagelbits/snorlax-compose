@@ -9,6 +9,7 @@ services:
       - "443:443"
     environment:
       - MY_DOMAIN=${MY_DOMAIN}
+      - TZ=America/Los_Angeles
     volumes:
       - /opt/dockerapps/authelia/caddy/data:/data
       - /opt/dockerapps/authelia/caddy/Caddyfile:/etc/caddy/Caddyfile
@@ -18,11 +19,14 @@ services:
     image: authelia/authelia:latest
     restart: unless-stopped
     depends_on:
-      - database
-      - redis
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     volumes:
       - /opt/dockerapps/authelia/config:/config
     environment:
+      TZ: America/Los_Angeles
       AUTHELIA_JWT_SECRET_FILE: /config/secrets/JWT_SECRET
       AUTHELIA_SESSION_SECRET_FILE: /config/secrets/SESSION_SECRET
       AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /config/secrets/SMTP_PASSWORD
@@ -38,12 +42,35 @@ services:
       - /opt/dockerapps/authelia/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: "authelia"
+      TZ: America/Los_Angeles
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "authelia", "-d", "authelia"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
     container_name: redis
     image: redis:7
     restart: unless-stopped
-    command: "redis-server --save 60 1 --loglevel warning --requirepass ${REDIS_PASSWORD}"
+    environment:
+      TZ: America/Los_Angeles
+    # cat-in-the-hat: re-enter docker-entrypoint.sh so it still drops to the redis user via gosu.
+    command:
+      - sh
+      - -c
+      - exec docker-entrypoint.sh redis-server --save 60 1 --loglevel warning --requirepass "$$(cat /run/secrets/redis_password)"
+    secrets:
+      - redis_password
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=\"$$(cat /run/secrets/redis_password)\" redis-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - /opt/dockerapps/authelia/redis:/data
+
+secrets:
+  redis_password:
+    file: /opt/dockerapps/authelia/config/secrets/REDIS_PASSWORD

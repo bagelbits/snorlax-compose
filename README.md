@@ -5,7 +5,7 @@ Docker Compose files for this homelab's stack, split by concern:
 - docker-compose.auth.yml     - Caddy, Authelia, Postgres, Redis
 - docker-compose.media.yml    - Plex, Tautulli, Overseerr
 - docker-compose.torrents.yml - Radarr, Sonarr, qBittorrent, Prowlarr, Bazarr
-- docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, FlareSolverr
+- docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, Byparr
 
 ## Env setup
 

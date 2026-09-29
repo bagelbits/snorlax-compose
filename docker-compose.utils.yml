@@ -10,6 +10,7 @@ services:
       - /media:/media
     environment:
       - LOG_LEVEL=debug
+      - TZ=America/Los_Angeles
       - HOMEPAGE_ALLOWED_HOSTS=snorlax.media
     restart: unless-stopped
   watchtower:
@@ -17,6 +18,7 @@ services:
     container_name: watchtower
     user: 0:0
     environment:
+      - TZ=America/Los_Angeles
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_HTTP_API_ENDPOINTS=metrics
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN}
@@ -84,6 +86,7 @@ services:
       - /opt/dockerapps/glances:/glances/conf
     environment:
       - "GLANCES_OPT=-w"
+      - TZ=America/Los_Angeles
   scrutiny:
     image: ghcr.io/analogj/scrutiny:master-omnibus
     container_name: scrutiny
@@ -94,7 +97,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1002
-      - TZ=Europe/London
+      - TZ=America/Los_Angeles
     volumes:
       - /opt/dockerapps/scrutiny/config:/opt/scrutiny/config
       - /opt/dockerapps/scrutiny/influxdb:/opt/scrutiny/influxdb
@@ -114,6 +117,8 @@ services:
     volumes:
       - /opt/dockerapps/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=America/Los_Angeles
     restart: unless-stopped
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
@@ -123,5 +128,5 @@ services:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=Europe/London
+      - TZ=America/Los_Angeles
     restart: unless-stopped

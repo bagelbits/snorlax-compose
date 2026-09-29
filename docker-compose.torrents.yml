@@ -9,6 +9,7 @@ services:
       - PUID=1000
       - PGID=1002
       - TZ=America/Los_Angeles
+      - RADARR__SERVER__ALLOWEDHOSTS=radarr,radarr.${MY_DOMAIN}
     volumes:
       - /opt/dockerapps/radarr:/config
       - /media/movies:/movies #optional
@@ -54,6 +55,7 @@ services:
       - PUID=1000
       - PGID=1002
       - TZ=America/Los_Angeles
+      - PROWLARR__SERVER__ALLOWEDHOSTS=prowlarr,prowlarr.${MY_DOMAIN}
     volumes:
       - /opt/dockerapps/prowlarr:/config
     restart: unless-stopped

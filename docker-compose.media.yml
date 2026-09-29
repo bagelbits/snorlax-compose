@@ -1,5 +1,4 @@
 ---
-name: "media"
 services:
   plex:
     image: linuxserver/plex:latest

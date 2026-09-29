@@ -25,17 +25,20 @@ from a local .env file at deploy time.
    - SONARR_API_KEY            - copy from Sonarr's Settings > General
    - RADARR_API_KEY            - copy from Radarr's Settings > General
 
-3. Compose only auto-loads .env from the current working directory, not
-   from wherever the -f files live. Either run compose from this
-   directory, or pass --env-file explicitly.
-
 ## Running
 
-    docker compose -f docker-compose.auth.yml \
-      -f docker-compose.media.yml \
-      -f docker-compose.torrents.yml \
-      -f docker-compose.utils.yml \
-      up -d --remove-orphans
+compose.yaml includes every docker-compose.*.yml file, so from this
+directory:
+
+    docker compose up -d --remove-orphans
+
+Or from anywhere:
+
+    docker compose --env-file /opt/dockerapps/docker-compose/.env \
+      -f /opt/dockerapps/docker-compose/compose.yaml up -d --remove-orphans
+
+`include` needs Docker Compose 2.20 or newer. The project name stays
+`media` (set in compose.yaml) so existing containers are reused.
 
 Authelia's own secrets (JWT/session/storage keys, SMTP password) aren't in
 .env - they're file-based (AUTHELIA_*_FILE vars pointing under

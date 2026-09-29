@@ -66,6 +66,4 @@ services:
       - /media/anime:/anime #optional
       - /media/tv:/tv #optional
       - /media/movies:/movies #optional
-    ports:
-      - 6767:6767
     restart: unless-stopped

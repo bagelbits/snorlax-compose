@@ -32,6 +32,7 @@ services:
     image: golift/unpackerr
     container_name: unpackerr
     volumes:
+      - /media/torrents:/media/torrents
       - /media/torrents:/torrents
     restart: unless-stopped
     user: 1000:1002
@@ -43,10 +44,12 @@ services:
       - UN_SONARR_0_URL=http://sonarr:8989
       - UN_SONARR_0_API_KEY=${SONARR_API_KEY}
       - UN_SONARR_0_PATHS_0=/torrents
+      - UN_SONARR_0_PATHS_1=/media/torrents
       - UN_SONARR_0_PROTOCOLS=torrent
       - UN_RADARR_0_URL=http://radarr:7878
       - UN_RADARR_0_API_KEY=${RADARR_API_KEY}
       - UN_RADARR_0_PATHS_0=/torrents
+      - UN_RADARR_0_PATHS_1=/media/torrents
       - UN_RADARR_0_PROTOCOLS=torrent
     security_opt:
       - no-new-privileges:true

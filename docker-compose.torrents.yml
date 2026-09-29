@@ -10,6 +10,7 @@ services:
       - RADARR__SERVER__ALLOWEDHOSTS=radarr,radarr.${MY_DOMAIN}
     volumes:
       - /opt/dockerapps/radarr:/config
+      - /media:/media
       - /media/movies:/movies #optional
       - /media/torrents:/torrents
     restart: unless-stopped
@@ -23,6 +24,7 @@ services:
       - SONARR__SERVER__ALLOWEDHOSTS=sonarr,sonarr.${MY_DOMAIN}
     volumes:
       - /opt/dockerapps/sonarr:/config
+      - /media:/media
       - /media/anime:/anime #optional
       - /media/tv:/tv #optional
       - /media/torrents:/torrents #optional
@@ -38,6 +40,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - /opt/dockerapps/qbittorrent:/config
+      - /media/torrents:/media/torrents
       - /media/torrents:/torrents
     ports:
       - 6881:6881
@@ -63,6 +66,9 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - /opt/dockerapps/bazarr:/config
+      - /media/anime:/media/anime
+      - /media/tv:/media/tv
+      - /media/movies:/media/movies
       - /media/anime:/anime #optional
       - /media/tv:/tv #optional
       - /media/movies:/movies #optional

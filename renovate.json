@@ -34,6 +34,12 @@
         "ghcr.io/analogj/scrutiny"
       ],
       "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-omnibus$"
+    },
+    {
+      "matchPackageNames": [
+        "linuxserver/qbittorrent"
+      ],
+      "allowedVersions": "/^\\d+\\.\\d+\\.\\d+_v\\d+\\.\\d+\\.\\d+-ls\\d+$/"
     }
   ]
 }

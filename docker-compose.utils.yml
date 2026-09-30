@@ -30,7 +30,7 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - /opt/dockerapps/homepage:/app/config # Make sure your local config directory exists
+      - /opt/dockerapps/homepage:/app/config
       - ./config/homepage/settings.yaml:/app/config/settings.yaml:ro
       - ./config/homepage/services.yaml:/app/config/services.yaml:ro
       - ./config/homepage/widgets.yaml:/app/config/widgets.yaml:ro

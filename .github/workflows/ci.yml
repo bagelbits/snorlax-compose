@@ -13,6 +13,10 @@ jobs:
         run: |
           cp .env.example .env
           docker compose config -q
+      - name: Validate Caddyfile
+        run: |
+          img=$(docker compose config --images | grep '^caddy')
+          docker run --rm -e MY_DOMAIN=example.com -v "$PWD/config/caddy:/etc/caddy:ro" "$img" caddy validate --config /etc/caddy/Caddyfile
       - name: Lint scripts
         run: |
           shellcheck scripts/deploy.sh

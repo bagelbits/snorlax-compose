@@ -119,8 +119,6 @@ changed. To reload by hand:
 
     docker compose exec proxy caddy reload --config /etc/caddy/Caddyfile
 
-The old /opt/dockerapps/authelia/caddy/Caddyfile is no longer used.
-
 ## Scripts
 
 qbit-fix-paths.py is a one-off helper, run inside a container with python3.

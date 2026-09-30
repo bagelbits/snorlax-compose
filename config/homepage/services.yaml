@@ -28,16 +28,6 @@
         widget:
           type: scrutiny
           url: http://scrutiny:8080
-    - Portainer:
-        icon: portainer.png
-        container: portainer
-        server: socket-proxy
-        href: https://portainer.snorlax.media/#!/3/docker/dashboard
-        widget:
-          type: portainer
-          url: https://portainer:9443
-          env: 3
-          key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
 - Media:
     - Plex:
         icon: plex.png

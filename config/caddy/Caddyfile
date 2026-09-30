@@ -63,12 +63,3 @@ bazarr.{$MY_DOMAIN} {
   import secure *
   reverse_proxy bazarr:6767
 }
-
-portainer.{$MY_DOMAIN} {
-  import secure *
-  reverse_proxy portainer:9443 {
-    transport http {
-      tls_insecure_skip_verify
-    }
-  }
-}

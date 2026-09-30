@@ -62,7 +62,7 @@ services:
       - auth
     security_opt:
       - no-new-privileges:true
-    image: postgres:15
+    image: postgres:18
     labels:
       - com.centurylinklabs.watchtower.enable=false
     restart: unless-stopped

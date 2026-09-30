@@ -71,7 +71,8 @@ Make sure crond starts at boot: `rc-update add crond && rc-service crond start`.
 Read results with `tail /var/log/snorlax-deploy.log`.
 
 Keep main PR-only with CI required, since a merge deploys itself. Major
-bumps such as Postgres still need a manual migration.
+bumps such as Postgres still need a manual migration: see
+docs/postgres-redis-upgrade.md.
 
 ## Caddy
 

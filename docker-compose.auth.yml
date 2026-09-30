@@ -14,7 +14,7 @@ services:
       - apps
     security_opt:
       - no-new-privileges:true
-    image: caddy:2
+    image: caddy:2@sha256:0c994536bddb66445885237f1a5dcc1916bccea922661c76b4e9fc24061f9b52
     restart: unless-stopped
     ports:
       - "80:80"
@@ -39,7 +39,7 @@ services:
       - auth
     security_opt:
       - no-new-privileges:true
-    image: authelia/authelia:4
+    image: authelia/authelia:4@sha256:bd97cff4fcbf715b5ff1f9ae286afbe6033afce385302520b0368122d43a6f54
     restart: unless-stopped
     depends_on:
       database:
@@ -66,7 +66,7 @@ services:
       - auth
     security_opt:
       - no-new-privileges:true
-    image: postgres:18
+    image: postgres:18@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722
     restart: unless-stopped
     volumes:
       # 18+ mounts the parent dir; PGDATA is /var/lib/postgresql/18/docker. Fresh dir on purpose.
@@ -88,7 +88,7 @@ services:
       - auth
     security_opt:
       - no-new-privileges:true
-    image: redis:8
+    image: redis:8@sha256:6f81e8915c60b065a524e6967e0ad1c639ba6efa84d669f823683ea04d9150ee
     restart: unless-stopped
     environment:
       TZ: America/Los_Angeles

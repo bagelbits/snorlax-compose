@@ -7,7 +7,7 @@ x-logging: &logging
 
 services:
   radarr:
-    image: linuxserver/radarr:6.4.4.10685-ls318
+    image: linuxserver/radarr:6.4.4.10685-ls318@sha256:adb6c09d6b729ea5e642c99cea35af72702ef476bf4763f153299ac5db9f0b4f
     container_name: radarr
     logging: *logging
     networks:
@@ -30,7 +30,7 @@ services:
       retries: 3
       start_period: 60s
   sonarr:
-    image: linuxserver/sonarr:4.0.20.3014-ls326
+    image: linuxserver/sonarr:4.0.20.3014-ls326@sha256:f247545d23ba8b233d6604575347e48a623fe6ad75dda02348bf81917f3b5c06
     container_name: sonarr
     logging: *logging
     networks:
@@ -53,7 +53,7 @@ services:
       retries: 3
       start_period: 60s
   qbittorrent:
-    image: linuxserver/qbittorrent:5.2.4_v2.0.15-ls479
+    image: linuxserver/qbittorrent:5.2.4_v2.0.15-ls479@sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983
     container_name: qbittorrent
     logging: *logging
     networks:
@@ -80,7 +80,7 @@ services:
       retries: 3
       start_period: 60s
   prowlarr:
-    image: linuxserver/prowlarr:2.6.5.5623-ls162
+    image: linuxserver/prowlarr:2.6.5.5623-ls162@sha256:f2b26429893d4c4cb71941b7ee50b1bdecd9d5f9f9e02d5410615e9f4f7c8d95
     container_name: prowlarr
     logging: *logging
     networks:
@@ -102,7 +102,7 @@ services:
       retries: 3
       start_period: 60s
   bazarr:
-    image: linuxserver/bazarr:v1.6.2-ls366
+    image: linuxserver/bazarr:v1.6.2-ls366@sha256:8b30e81c4aec2991f469e78fae8afaa89ecc9b21a80e3897f50427216b55470c
     container_name: bazarr
     logging: *logging
     networks:

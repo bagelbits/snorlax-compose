@@ -89,7 +89,8 @@ bumps such as Postgres still need a manual migration.
 ## Caddy
 
 config/caddy/Caddyfile is mounted read-only as a directory at /etc/caddy. Edit
-it here, merge, and reload after the deploy:
+it here and merge. CI validates it, and deploy.sh reloads Caddy when the file
+changed. To reload by hand:
 
     docker compose exec proxy caddy reload --config /etc/caddy/Caddyfile
 

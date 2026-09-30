@@ -21,7 +21,7 @@ services:
     security_opt:
       - no-new-privileges:true
   homepage:
-    image: gethomepage/homepage:latest
+    image: gethomepage/homepage:v2.4.0
     container_name: homepage
     logging: *logging
     networks:
@@ -53,7 +53,7 @@ services:
       - HOMEPAGE_VAR_QBITTORRENT_PASSWORD=${HOMEPAGE_VAR_QBITTORRENT_PASSWORD}
     restart: unless-stopped
   unpackerr:
-    image: golift/unpackerr
+    image: golift/unpackerr:0.16.1
     container_name: unpackerr
     logging: *logging
     networks:
@@ -78,7 +78,7 @@ services:
     security_opt:
       - no-new-privileges:true
   monitoring:
-    image: nicolargo/glances:latest
+    image: nicolargo/glances:4.5.7
     container_name: monitoring
     logging: *logging
     networks:

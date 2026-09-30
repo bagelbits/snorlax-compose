@@ -27,6 +27,12 @@ services:
     volumes:
       - /opt/dockerapps/authelia/caddy/data:/data
       - ./config/caddy:/etc/caddy:ro
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "443"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   auth:
     container_name: auth

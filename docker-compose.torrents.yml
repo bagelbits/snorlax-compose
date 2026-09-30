@@ -23,6 +23,12 @@ services:
       - /opt/dockerapps/radarr:/config
       - /media:/media
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "-H", "Host: radarr", "http://localhost:7878/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
@@ -40,6 +46,12 @@ services:
       - /opt/dockerapps/sonarr:/config
       - /media:/media
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "-H", "Host: sonarr", "http://localhost:8989/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -61,6 +73,12 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:8123/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   prowlarr:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -77,6 +95,12 @@ services:
     volumes:
       - /opt/dockerapps/prowlarr:/config
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "-H", "Host: prowlarr", "http://localhost:9696/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   bazarr:
     image: linuxserver/bazarr:latest
     container_name: bazarr
@@ -95,6 +119,12 @@ services:
       - /media/tv:/media/tv
       - /media/movies:/media/movies
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:6767/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
 networks:
   apps: {}

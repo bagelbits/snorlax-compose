@@ -26,6 +26,12 @@ services:
       - /media/anime:/anime
       - /media/music:/music
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:32400/identity"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   tautulli:
     image: linuxserver/tautulli:latest
     container_name: tautulli
@@ -41,6 +47,12 @@ services:
     volumes:
       - /opt/dockerapps/tautulli:/config
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:8181/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   overseerr:
     image: ghcr.io/seerr-team/seerr:latest
     init: true
@@ -57,6 +69,12 @@ services:
     volumes:
       - /opt/dockerapps/overseerr:/app/config
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:5055/api/v1/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
 networks:
   apps: {}

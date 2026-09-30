@@ -28,7 +28,7 @@ from a local .env file at deploy time.
    - PLEX_CLAIM                - one-time claim token from plex.tv/claim, expires in ~4 min
    - SONARR_API_KEY            - copy from Sonarr's Settings > General
    - RADARR_API_KEY            - copy from Radarr's Settings > General
-   - HOMEPAGE_VAR_*            - widget keys for Homepage (Portainer, Tautulli,
+   - HOMEPAGE_VAR_*            - widget keys for Homepage (Scrutiny, Portainer, Tautulli,
                                  Overseerr, Bazarr, Prowlarr) and the
                                  qBittorrent login. Sonarr/Radarr reuse the
                                  API keys above.

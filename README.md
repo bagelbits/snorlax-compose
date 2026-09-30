@@ -72,6 +72,15 @@ The unit runs as root, so root needs read access to the git remote (for
 example a deploy key). Check runs with `journalctl -u snorlax-deploy`.
 Keep main PR-only with CI required, since a merge deploys itself. Major
 bumps such as Postgres still need a manual migration.
+||||||| parent of a7d6e49 (feat(caddy): track Caddyfile in repo, mount as directory)
+## Caddy
+
+config/caddy/Caddyfile is mounted read-only as a directory at /etc/caddy. Edit
+it here, merge, and reload after the deploy:
+
+    docker compose exec proxy caddy reload --config /etc/caddy/Caddyfile
+
+The old /opt/dockerapps/authelia/caddy/Caddyfile is no longer used.
 
 ## Scripts
 

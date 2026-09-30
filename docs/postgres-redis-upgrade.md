@@ -2,7 +2,8 @@
 
 Authelia storage (`database`) and sessions (`redis`) only. Expect a few
 minutes of downtime: anything behind Authelia is unreachable while `auth` is
-stopped.
+stopped. Sites behind `forward_auth` return 502 (they fail closed, not open);
+`overseerr.` has no Authelia gate and keeps serving.
 
 Status: written against the upstream image docs and checked locally
 (`postgres:18.6`, `redis:8.10.2` on a scratch volume). **Not run against the

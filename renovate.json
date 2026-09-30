@@ -40,6 +40,22 @@
         "linuxserver/qbittorrent"
       ],
       "allowedVersions": "/^\\d+\\.\\d+\\.\\d+_v\\d+\\.\\d+\\.\\d+-ls\\d+$/"
+    },
+    {
+      "matchUpdateTypes": [
+        "pin",
+        "digest",
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "!linuxserver/**",
+        "!postgres",
+        "!redis",
+        "!authelia/authelia"
+      ],
+      "automerge": true,
+      "minimumReleaseAge": "3 days"
     }
   ]
 }

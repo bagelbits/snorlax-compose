@@ -7,7 +7,7 @@ x-logging: &logging
 
 services:
   socket-proxy:
-    image: tecnativa/docker-socket-proxy:0.3
+    image: tecnativa/docker-socket-proxy:0.3.0
     container_name: socket-proxy
     logging: *logging
     restart: unless-stopped
@@ -95,7 +95,7 @@ services:
       - DOCKER_HOST=tcp://socket-proxy:2375
       - TZ=America/Los_Angeles
   scrutiny:
-    image: ghcr.io/analogj/scrutiny:master-omnibus
+    image: ghcr.io/analogj/scrutiny:v0.9.5-omnibus
     container_name: scrutiny
     logging: *logging
     networks:
@@ -122,7 +122,7 @@ services:
       - /dev/sdf:/dev/sdf
       - /dev/sdg:/dev/sdg
   byparr:
-    image: ghcr.io/thephaseless/byparr:latest
+    image: ghcr.io/thephaseless/byparr:2.0.1
     container_name: byparr
     logging: *logging
     networks:

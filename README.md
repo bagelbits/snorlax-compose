@@ -5,7 +5,7 @@ Docker Compose files for this homelab's stack, split by concern:
 - docker-compose.auth.yml     - Caddy, Authelia, Postgres, Redis
 - docker-compose.media.yml    - Plex, Tautulli, Overseerr
 - docker-compose.torrents.yml - Radarr, Sonarr, qBittorrent, Prowlarr, Bazarr
-- docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, Byparr, socket-proxy
+- docker-compose.utils.yml    - Homepage, Unpackerr, Glances, Scrutiny, Portainer, Byparr, socket-proxy
 - config/caddy/Caddyfile      - Caddy routes, mounted into the proxy container
 - scripts/                    - deploy.sh (cron) and one-off helpers
 - renovate.json               - Renovate update rules
@@ -25,7 +25,6 @@ from a local .env file at deploy time.
    - MY_DOMAIN                 - Caddy's domain, e.g. snorlax.media
    - POSTGRES_PASSWORD         - Postgres + Authelia storage
    - PLEX_CLAIM                - one-time claim token from plex.tv/claim, expires in ~4 min
-   - WATCHTOWER_HTTP_API_TOKEN - Watchtower's HTTP API
    - SONARR_API_KEY            - copy from Sonarr's Settings > General
    - RADARR_API_KEY            - copy from Radarr's Settings > General
 
@@ -49,20 +48,28 @@ Authelia's own secrets (JWT/session/storage keys, SMTP password) aren't in
 /opt/dockerapps/authelia/config/secrets/), managed on the host directly.
 Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
 
-## Networks and updates
+## Networks
 
 - `auth` - Caddy, Authelia, Postgres, Redis. Caddy also joins `apps`.
 - `apps` - everything else.
 - `docker-api` - internal only: socket-proxy and Glances. socket-proxy
-  (read-only, containers/images) is the only thing besides Watchtower and
-  Portainer that touches the Docker socket. To enable Homepage's Docker
+  (read-only, containers/images) is the only thing besides Portainer
+  that touches the Docker socket. To enable Homepage's Docker
   integration, add it to this network and set `host: socket-proxy`,
   `port: 2375` in docker.yaml.
-- Caddy, Authelia, Postgres, Redis and Plex carry
-  `com.centurylinklabs.watchtower.enable=false`. Caddy and Authelia are pinned
-  to a major tag. Renovate opens PRs for tag bumps; merging one deploys it
-  within 10 minutes (see Auto-deploy). Postgres major bumps only appear on
-  Renovate's Dependency Dashboard, since they need a dump and restore first.
+
+## Updates
+
+Renovate (renovate.json) replaces Watchtower. It first opens a PR pinning every
+image by digest. After that nothing changes until a Renovate PR is merged, and
+merging deploys it within 10 minutes (see Auto-deploy).
+
+- Saturday before 6am Pacific: one grouped PR with all routine image updates.
+- Caddy, Authelia, Postgres, Redis and Plex get their own PRs, so review them
+  one at a time.
+- Postgres major bumps only appear on the Dependency Dashboard, since they
+  need a dump and restore first.
+- Unused images are pruned after each deploy.
 
 ## Auto-deploy
 

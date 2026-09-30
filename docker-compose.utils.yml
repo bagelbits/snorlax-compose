@@ -37,23 +37,6 @@ services:
       - TZ=America/Los_Angeles
       - HOMEPAGE_ALLOWED_HOSTS=${MY_DOMAIN}
     restart: unless-stopped
-  watchtower:
-    image: ghcr.io/nicholas-fedor/watchtower
-    container_name: watchtower
-    logging: *logging
-    networks:
-      - apps
-    security_opt:
-      - no-new-privileges:true
-    user: 0:0
-    environment:
-      - TZ=America/Los_Angeles
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_HTTP_API_ENDPOINTS=metrics
-      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN}
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
   unpackerr:
     image: golift/unpackerr
     container_name: unpackerr

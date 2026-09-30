@@ -57,6 +57,21 @@ Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
   `com.centurylinklabs.watchtower.enable=false`. Caddy and Authelia are pinned
   to a major tag; Renovate opens PRs for bumps, and those get deployed by hand.
 
+## Auto-deploy
+
+scripts/deploy.sh pulls main (fast-forward only), validates the config, and
+runs `docker compose up -d --remove-orphans`. A systemd timer runs it every
+10 minutes. Install on the server:
+
+    sudo cp systemd/snorlax-deploy.* /etc/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now snorlax-deploy.timer
+
+The unit runs as root, so root needs read access to the git remote (for
+example a deploy key). Check runs with `journalctl -u snorlax-deploy`.
+Keep main PR-only with CI required, since a merge deploys itself. Major
+bumps such as Postgres still need a manual migration.
+
 ## Scripts
 
 One-off helpers in scripts/, run inside a container with python3. Each

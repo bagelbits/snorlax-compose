@@ -41,8 +41,6 @@ services:
       - LOG_LEVEL=info
       - TZ=America/Los_Angeles
       - HOMEPAGE_ALLOWED_HOSTS=${MY_DOMAIN}
-      - HOMEPAGE_VAR_SCRUTINY_KEY=${HOMEPAGE_VAR_SCRUTINY_KEY}
-      - HOMEPAGE_VAR_PORTAINER_KEY=${HOMEPAGE_VAR_PORTAINER_KEY}
       - HOMEPAGE_VAR_TAUTULLI_KEY=${HOMEPAGE_VAR_TAUTULLI_KEY}
       - HOMEPAGE_VAR_OVERSEERR_KEY=${HOMEPAGE_VAR_OVERSEERR_KEY}
       - HOMEPAGE_VAR_SONARR_KEY=${SONARR_API_KEY}
@@ -123,20 +121,6 @@ services:
       - /dev/sde:/dev/sde
       - /dev/sdf:/dev/sdf
       - /dev/sdg:/dev/sdg
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    logging: *logging
-    networks:
-      - apps
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - /opt/dockerapps/portainer/data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - TZ=America/Los_Angeles
-    restart: unless-stopped
   byparr:
     image: ghcr.io/thephaseless/byparr:latest
     container_name: byparr

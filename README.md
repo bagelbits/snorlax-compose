@@ -5,7 +5,7 @@ Docker Compose files for this homelab's stack, split by concern:
 - docker-compose.auth.yml     - Caddy, Authelia, Postgres, Redis
 - docker-compose.media.yml    - Plex, Tautulli, Overseerr
 - docker-compose.torrents.yml - Radarr, Sonarr, qBittorrent, Prowlarr, Bazarr
-- docker-compose.utils.yml    - Homepage, Unpackerr, Glances, Scrutiny, Portainer, Byparr, socket-proxy
+- docker-compose.utils.yml    - Homepage, Unpackerr, Glances, Scrutiny, Byparr, socket-proxy
 - config/caddy/Caddyfile      - Caddy routes, mounted into the proxy container
 - scripts/                    - deploy.sh (cron) and one-off helpers
 - renovate.json               - Renovate update rules
@@ -28,7 +28,7 @@ from a local .env file at deploy time.
    - PLEX_CLAIM                - one-time claim token from plex.tv/claim, expires in ~4 min
    - SONARR_API_KEY            - copy from Sonarr's Settings > General
    - RADARR_API_KEY            - copy from Radarr's Settings > General
-   - HOMEPAGE_VAR_*            - widget keys for Homepage (Scrutiny, Portainer, Tautulli,
+   - HOMEPAGE_VAR_*            - widget keys for Homepage (Tautulli,
                                  Overseerr, Bazarr, Prowlarr) and the
                                  qBittorrent login. Sonarr/Radarr reuse the
                                  API keys above.
@@ -58,8 +58,8 @@ Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
 - `auth` - Caddy, Authelia, Postgres, Redis. Caddy also joins `apps`.
 - `apps` - everything else.
 - `docker-api` - internal only: socket-proxy, Glances and Homepage.
-  socket-proxy (read-only, containers/images) is the only thing besides
-  Portainer that touches the Docker socket. Homepage reaches it through
+  socket-proxy (read-only, containers/images) is the only thing that
+  touches the Docker socket. Homepage reaches it through
   config/homepage/docker.yaml and `server: socket-proxy` on each service.
 
 ## Updates

@@ -32,7 +32,6 @@ server and is not in git.
 | Secret | `.env` variable | Consumers in this repo | Consumers in app UIs |
 | --- | --- | --- | --- |
 | qBittorrent username/password | `HOMEPAGE_VAR_QBITTORRENT_USERNAME`, `HOMEPAGE_VAR_QBITTORRENT_PASSWORD` | `homepage` widget (`config/homepage/services.yaml`) | Sonarr and Radarr download clients; Prowlarr download client if you added one |
-| Portainer API token | `HOMEPAGE_VAR_PORTAINER_KEY` | `homepage` widget | none |
 | Sonarr API key | `SONARR_API_KEY` | `homepage` (as `HOMEPAGE_VAR_SONARR_KEY`), `unpackerr` (`UN_SONARR_0_API_KEY`) | Prowlarr (Apps), Bazarr (Sonarr), Overseerr (Sonarr server) |
 | Radarr API key | `RADARR_API_KEY` | `homepage` (as `HOMEPAGE_VAR_RADARR_KEY`), `unpackerr` (`UN_RADARR_0_API_KEY`) | Prowlarr (Apps), Bazarr (Radarr), Overseerr (Radarr server) |
 | Prowlarr API key | `HOMEPAGE_VAR_PROWLARR_KEY` | `homepage` widget | Sonarr/Radarr indexers synced from Prowlarr |
@@ -51,7 +50,7 @@ history that holds them.
 2. Update the in-app links straight away (Prowlarr, Bazarr, Overseerr). Until
    you do, syncs and requests from those apps fail.
 3. Rotate Prowlarr, then re-sync its indexers (below).
-4. Rotate the other keys (Bazarr, Overseerr, Portainer, Scrutiny) and the
+4. Rotate the other keys (Bazarr, Overseerr, Scrutiny) and the
    qBittorrent login.
 5. Edit `.env` once with every new value, then recreate `homepage` and
    `unpackerr`.
@@ -97,15 +96,6 @@ Only Homepage reads these.
 Set `HOMEPAGE_VAR_BAZARR_KEY`, `HOMEPAGE_VAR_OVERSEERR_KEY` and
 `HOMEPAGE_VAR_SCRUTINY_KEY` in `.env`, then recreate `homepage`.
 
-### Portainer API token
-
-1. Portainer: My account > Access tokens. Remove the leaked token first, then
-   add a new one. The value is shown once.
-2. Set `HOMEPAGE_VAR_PORTAINER_KEY` in `.env`, then recreate `homepage`.
-
-The token carries the permissions of the account that made it. If that account
-is an admin, also change its password.
-
 ### qBittorrent username and password
 
 1. qBittorrent: Options > Web UI > Authentication, set a new username and
@@ -149,7 +139,7 @@ Checklist:
 - [ ] Old keys and the old qBittorrent login no longer work (try the old key
       against `http://<service>:<port>/api/...` from inside the `apps`
       network, expect 401).
-- [ ] Homepage loads and every widget shows data: Scrutiny, Portainer, Plex
+- [ ] Homepage loads and every widget shows data: Scrutiny, Plex
       (Tautulli), Overseerr, Sonarr, Radarr, Bazarr, Prowlarr, qBittorrent.
 - [ ] Prowlarr > Settings > Apps: Sonarr and Radarr both pass Test.
 - [ ] Sonarr/Radarr > Settings > Indexers: synced indexers pass Test.

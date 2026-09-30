@@ -6,6 +6,10 @@ Docker Compose files for this homelab's stack, split by concern:
 - docker-compose.media.yml    - Plex, Tautulli, Overseerr
 - docker-compose.torrents.yml - Radarr, Sonarr, qBittorrent, Prowlarr, Bazarr
 - docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, Byparr, socket-proxy
+- config/caddy/Caddyfile      - Caddy routes, mounted into the proxy container
+- scripts/                    - deploy.sh (cron) and one-off helpers
+- renovate.json               - Renovate update rules
+- .github/workflows/ci.yml    - validates compose and lints scripts on every PR
 
 ## Env setup
 
@@ -56,7 +60,9 @@ Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
   `port: 2375` in docker.yaml.
 - Caddy, Authelia, Postgres, Redis and Plex carry
   `com.centurylinklabs.watchtower.enable=false`. Caddy and Authelia are pinned
-  to a major tag; Renovate opens PRs for bumps, and those get deployed by hand.
+  to a major tag. Renovate opens PRs for tag bumps; merging one deploys it
+  within 10 minutes (see Auto-deploy). Postgres major bumps only appear on
+  Renovate's Dependency Dashboard, since they need a dump and restore first.
 
 ## Auto-deploy
 
@@ -84,7 +90,8 @@ The old /opt/dockerapps/authelia/caddy/Caddyfile is no longer used.
 
 ## Scripts
 
-One-off helpers in scripts/, run inside a container with python3. Each
-prints a plan by default; pass --apply to act. See --help for usage.
+qbit-fix-paths.py is a one-off helper, run inside a container with python3.
+It prints a plan by default; pass --apply to act. See --help for usage.
 
+- deploy.sh         - pull main and apply it (run by cron, see Auto-deploy)
 - qbit-fix-paths.py - repoint qBittorrent torrents from /torrents to /media/torrents

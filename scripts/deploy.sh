@@ -4,3 +4,4 @@ cd "$(dirname "$0")/.."
 git pull --ff-only
 docker compose config -q
 docker compose up -d --remove-orphans
+docker image prune -f

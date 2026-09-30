@@ -8,8 +8,6 @@ x-logging: &logging
 services:
   plex:
     image: linuxserver/plex:latest
-    labels:
-      - com.centurylinklabs.watchtower.enable=false
     container_name: plex
     logging: *logging
     network_mode: host

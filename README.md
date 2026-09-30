@@ -57,11 +57,10 @@ Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
 
 - `auth` - Caddy, Authelia, Postgres, Redis. Caddy also joins `apps`.
 - `apps` - everything else.
-- `docker-api` - internal only: socket-proxy and Glances. socket-proxy
-  (read-only, containers/images) is the only thing besides Portainer
-  that touches the Docker socket. To enable Homepage's Docker
-  integration, add it to this network and set `host: socket-proxy`,
-  `port: 2375` in docker.yaml.
+- `docker-api` - internal only: socket-proxy, Glances and Homepage.
+  socket-proxy (read-only, containers/images) is the only thing besides
+  Portainer that touches the Docker socket. Homepage reaches it through
+  config/homepage/docker.yaml and `server: socket-proxy` on each service.
 
 ## Updates
 
@@ -101,9 +100,9 @@ file changes, because Authelia does not reload its config.
 
 ## Homepage
 
-config/homepage/{settings,services,widgets}.yaml are mounted read-only over
+config/homepage/{settings,services,widgets,docker}.yaml are mounted read-only over
 the host's /opt/dockerapps/homepage, which still supplies bookmarks.yaml,
-docker.yaml, logs/ and custom assets. Keys live in .env as HOMEPAGE_VAR_* and
+logs/ and custom assets. Keys live in .env as HOMEPAGE_VAR_* and
 are referenced as `{{HOMEPAGE_VAR_NAME}}` in the YAML. deploy.sh restarts
 `homepage` when config/homepage changes.
 

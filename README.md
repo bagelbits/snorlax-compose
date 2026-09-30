@@ -67,8 +67,8 @@ merging deploys it within 10 minutes (see Auto-deploy).
 - Saturday before 6am Pacific: one grouped PR with all routine image updates.
 - Caddy, Authelia, Postgres, Redis and Plex get their own PRs, so review them
   one at a time.
-- Postgres major bumps only appear on the Dependency Dashboard, since they
-  need a dump and restore first.
+- A Postgres major bump needs a dump and restore first. Do not merge one
+  until you have done that.
 - Unused images are pruned after each deploy.
 
 ## Auto-deploy

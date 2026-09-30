@@ -19,9 +19,15 @@
         "!authelia/authelia",
         "!postgres",
         "!redis",
-        "!linuxserver/plex"
+        "!linuxserver/**"
       ],
       "groupName": "container images"
+    },
+    {
+      "matchPackageNames": [
+        "linuxserver/**"
+      ],
+      "versioning": "loose"
     }
   ]
 }

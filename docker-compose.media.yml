@@ -7,7 +7,7 @@ x-logging: &logging
 
 services:
   plex:
-    image: linuxserver/plex:latest
+    image: linuxserver/plex:1.43.4.10903-e5521bd8c-ls326
     container_name: plex
     logging: *logging
     network_mode: host
@@ -31,7 +31,7 @@ services:
       retries: 3
       start_period: 60s
   tautulli:
-    image: linuxserver/tautulli:latest
+    image: linuxserver/tautulli:v2.18.2-ls245
     container_name: tautulli
     logging: *logging
     networks:
@@ -52,7 +52,7 @@ services:
       retries: 3
       start_period: 60s
   overseerr:
-    image: ghcr.io/seerr-team/seerr:latest
+    image: ghcr.io/seerr-team/seerr:v3.5.0
     init: true
     container_name: overseerr
     logging: *logging

@@ -1,0 +1,11 @@
+- logo:
+    icon: https://upload.wikimedia.org/wikipedia/en/3/3f/Pok%C3%A9mon_Snorlax_art.png
+- resources:
+    cpu: true
+    memory: true
+    disk: /media
+
+- search:
+    provider: duckduckgo
+    showSearchSuggestions: true
+    target: _blank

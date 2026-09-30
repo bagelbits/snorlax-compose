@@ -1,0 +1,132 @@
+- Monitoring:
+    - CPU Usage:
+        icon: mdi-cpu-64-bit
+        widget:
+          type: glances
+          version: 4
+          url: http://monitoring:61208
+          metric: cpu
+    - Mem Usage:
+        icon: mdi-memory
+        widget:
+          type: glances
+          version: 4
+          url: http://monitoring:61208
+          metric: memory
+    - Networking:
+        icon: mdi-network-outline
+        widget:
+          type: glances
+          version: 4
+          url: http://monitoring:61208
+          metric: network:eth0
+    - Drive Health:
+        icon: scrutiny.png
+        container: scrutiny
+        href: https://scrutiny.snorlax.media/
+        widget:
+          type: scrutiny
+          url: http://scrutiny:8080
+          key: "{{HOMEPAGE_VAR_SCRUTINY_KEY}}"
+    - Portainer:
+        icon: portainer.png
+        container: portainer
+        href: https://portainer.snorlax.media/#!/3/docker/dashboard
+        widget:
+          type: portainer
+          url: https://portainer:9443
+          env: 3
+          key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
+- Media:
+    - Plex:
+        icon: plex.png
+        description: For streaming media
+        service: docker
+        siteMonitor: https://plex.snorlax.media/
+        container: plex
+        widget:
+          type: tautulli
+          url: http://tautulli:8181
+          key: "{{HOMEPAGE_VAR_TAUTULLI_KEY}}"
+    - Overseerr:
+        icon: overseerr.png
+        href: https://overseerr.snorlax.media/
+        description: For requesting media
+        siteMonitor: https://overseerr.snorlax.media/
+        service: docker
+        container: overseerr
+        widget:
+          type: overseerr
+          url: http://overseerr:5055
+          key: "{{HOMEPAGE_VAR_OVERSEERR_KEY}}"
+    - Sonarr:
+        icon: sonarr.png
+        href: https://sonarr.snorlax.media/
+        description: For TV download scheduling
+        siteMonitor: https://sonarr.snorlax.media/
+        service: docker
+        container: sonarr
+        widget:
+          type: sonarr
+          url: http://sonarr:8989
+          key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+    - Radarr:
+        icon: radarr.png
+        href: https://radarr.snorlax.media/
+        description: For movie download scheduling
+        siteMonitor: https://radarr.snorlax.media/
+        service: docker
+        container: radarr
+        widget:
+          type: radarr
+          url: http://radarr:7878
+          key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+    - Bazarr:
+        icon: bazarr.png
+        href: https://bazarr.snorlax.media/
+        description: For subtitle management
+        siteMonitor: https://bazarr.snorlax.media/
+        service: docker
+        container: bazarr
+        widget:
+          type: bazarr
+          url: http://bazarr:6767
+          key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+
+- Torrenting:
+    - Prowlarr:
+        icon: prowlarr.png
+        href: https://prowlarr.snorlax.media/
+        description: For torrent indexers
+        siteMonitor: https://prowlarr.snorlax.media/
+        container: prowlarr
+        widget:
+          type: prowlarr
+          url: http://prowlarr:9696
+          key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+    - Qbittorrent:
+        icon: qbittorrent.png
+        href: https://qbittorrent.snorlax.media/
+        description: For downloading torrents
+        siteMonitor: https://qbittorrent.snorlax.media/
+        container: qbittorrent
+        widget:
+          type: qbittorrent
+          url: http://qbittorrent:8123
+          username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
+
+- Auth:
+    - Caddy:
+        icon: caddy.png
+        description: For reverse proxy
+        container: caddy
+        widget:
+          type: caddy
+          url: http://proxy:32080
+    - Authelia:
+        icon: authelia.png
+        href: https://auth.snorlax.media/
+        description: For 2FA and SSO
+        siteMonitor: https://auth.snorlax.media/
+        container: auth

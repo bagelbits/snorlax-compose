@@ -1,0 +1,12 @@
+background: /images/background.png
+cardBlur: sm
+
+layout:
+  Monitoring:
+    style: row
+    columns: 3
+  Media:
+    style: row
+    columns: 4
+  Torrenting:
+  Auth:

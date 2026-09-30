@@ -30,12 +30,25 @@ services:
       - no-new-privileges:true
     volumes:
       - /opt/dockerapps/homepage:/app/config # Make sure your local config directory exists
+      - ./config/homepage/settings.yaml:/app/config/settings.yaml:ro
+      - ./config/homepage/services.yaml:/app/config/services.yaml:ro
+      - ./config/homepage/widgets.yaml:/app/config/widgets.yaml:ro
       - /opt/public/images:/app/public/images
       - /media:/media
     environment:
       - LOG_LEVEL=info
       - TZ=America/Los_Angeles
       - HOMEPAGE_ALLOWED_HOSTS=${MY_DOMAIN}
+      - HOMEPAGE_VAR_SCRUTINY_KEY=${HOMEPAGE_VAR_SCRUTINY_KEY}
+      - HOMEPAGE_VAR_PORTAINER_KEY=${HOMEPAGE_VAR_PORTAINER_KEY}
+      - HOMEPAGE_VAR_TAUTULLI_KEY=${HOMEPAGE_VAR_TAUTULLI_KEY}
+      - HOMEPAGE_VAR_OVERSEERR_KEY=${HOMEPAGE_VAR_OVERSEERR_KEY}
+      - HOMEPAGE_VAR_SONARR_KEY=${SONARR_API_KEY}
+      - HOMEPAGE_VAR_RADARR_KEY=${RADARR_API_KEY}
+      - HOMEPAGE_VAR_BAZARR_KEY=${HOMEPAGE_VAR_BAZARR_KEY}
+      - HOMEPAGE_VAR_PROWLARR_KEY=${HOMEPAGE_VAR_PROWLARR_KEY}
+      - HOMEPAGE_VAR_QBITTORRENT_USERNAME=${HOMEPAGE_VAR_QBITTORRENT_USERNAME}
+      - HOMEPAGE_VAR_QBITTORRENT_PASSWORD=${HOMEPAGE_VAR_QBITTORRENT_PASSWORD}
     restart: unless-stopped
   unpackerr:
     image: golift/unpackerr

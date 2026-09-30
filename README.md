@@ -28,6 +28,10 @@ from a local .env file at deploy time.
    - PLEX_CLAIM                - one-time claim token from plex.tv/claim, expires in ~4 min
    - SONARR_API_KEY            - copy from Sonarr's Settings > General
    - RADARR_API_KEY            - copy from Radarr's Settings > General
+   - HOMEPAGE_VAR_*            - widget keys for Homepage (Scrutiny, Portainer, Tautulli,
+                                 Overseerr, Bazarr, Prowlarr) and the
+                                 qBittorrent login. Sonarr/Radarr reuse the
+                                 API keys above.
 
 ## Running
 
@@ -94,6 +98,14 @@ config/authelia/configuration.yml is mounted read-only over the host's
 (AUTHELIA_*_FILE env vars). users_database.yml and secrets/ stay on the host,
 since they hold password hashes and keys. deploy.sh restarts `auth` when the
 file changes, because Authelia does not reload its config.
+
+## Homepage
+
+config/homepage/{settings,services,widgets}.yaml are mounted read-only over
+the host's /opt/dockerapps/homepage, which still supplies bookmarks.yaml,
+docker.yaml, logs/ and custom assets. Keys live in .env as HOMEPAGE_VAR_* and
+are referenced as `{{HOMEPAGE_VAR_NAME}}` in the YAML. deploy.sh restarts
+`homepage` when config/homepage changes.
 
 ## Glances
 

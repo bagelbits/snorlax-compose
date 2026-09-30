@@ -9,6 +9,9 @@ docker image prune -f
 if ! git diff --quiet "$old" HEAD -- config/authelia; then
   docker compose restart auth
 fi
+if ! git diff --quiet "$old" HEAD -- config/homepage; then
+  docker compose restart homepage
+fi
 if ! git diff --quiet "$old" HEAD -- config/glances; then
   docker compose restart monitoring
 fi

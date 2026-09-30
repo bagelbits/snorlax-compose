@@ -1,8 +1,17 @@
 ---
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 10m
+    max-file: "3"
+
 services:
   plex:
     image: linuxserver/plex:latest
+    labels:
+      - com.centurylinklabs.watchtower.enable=false
     container_name: plex
+    logging: *logging
     network_mode: host
     environment:
       - PUID=1000
@@ -20,6 +29,11 @@ services:
   tautulli:
     image: linuxserver/tautulli:latest
     container_name: tautulli
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1002
@@ -31,6 +45,11 @@ services:
     image: ghcr.io/seerr-team/seerr:latest
     init: true
     container_name: overseerr
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1002
@@ -38,3 +57,6 @@ services:
     volumes:
       - /opt/dockerapps/overseerr:/app/config
     restart: unless-stopped
+
+networks:
+  apps: {}

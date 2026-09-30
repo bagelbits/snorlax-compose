@@ -1,0 +1,19 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate compose
+        run: |
+          cp .env.example .env
+          docker compose config -q
+      - name: Lint scripts
+        run: |
+          shellcheck scripts/deploy.sh
+          python3 -m py_compile scripts/qbit-fix-paths.py

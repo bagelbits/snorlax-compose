@@ -5,7 +5,7 @@ Docker Compose files for this homelab's stack, split by concern:
 - docker-compose.auth.yml     - Caddy, Authelia, Postgres, Redis
 - docker-compose.media.yml    - Plex, Tautulli, Overseerr
 - docker-compose.torrents.yml - Radarr, Sonarr, qBittorrent, Prowlarr, Bazarr
-- docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, Byparr
+- docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, Byparr, socket-proxy
 
 ## Env setup
 
@@ -44,6 +44,34 @@ Authelia's own secrets (JWT/session/storage keys, SMTP password) aren't in
 .env - they're file-based (AUTHELIA_*_FILE vars pointing under
 /opt/dockerapps/authelia/config/secrets/), managed on the host directly.
 Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
+
+## Networks and updates
+
+- `auth` - Caddy, Authelia, Postgres, Redis. Caddy also joins `apps`.
+- `apps` - everything else.
+- `docker-api` - internal only: socket-proxy and Glances. socket-proxy
+  (read-only, containers/images) is the only thing besides Watchtower and
+  Portainer that touches the Docker socket. To enable Homepage's Docker
+  integration, add it to this network and set `host: socket-proxy`,
+  `port: 2375` in docker.yaml.
+- Caddy, Authelia, Postgres, Redis and Plex carry
+  `com.centurylinklabs.watchtower.enable=false`. Caddy and Authelia are pinned
+  to a major tag; Renovate opens PRs for bumps, and those get deployed by hand.
+
+## Auto-deploy
+
+scripts/deploy.sh pulls main (fast-forward only), validates the config, and
+runs `docker compose up -d --remove-orphans`. A systemd timer runs it every
+10 minutes. Install on the server:
+
+    sudo cp systemd/snorlax-deploy.* /etc/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now snorlax-deploy.timer
+
+The unit runs as root, so root needs read access to the git remote (for
+example a deploy key). Check runs with `journalctl -u snorlax-deploy`.
+Keep main PR-only with CI required, since a merge deploys itself. Major
+bumps such as Postgres still need a manual migration.
 
 ## Scripts
 

@@ -23,6 +23,7 @@
     - Drive Health:
         icon: scrutiny.png
         container: scrutiny
+        server: socket-proxy
         href: https://scrutiny.snorlax.media/
         widget:
           type: scrutiny
@@ -31,6 +32,7 @@
     - Portainer:
         icon: portainer.png
         container: portainer
+        server: socket-proxy
         href: https://portainer.snorlax.media/#!/3/docker/dashboard
         widget:
           type: portainer
@@ -44,6 +46,7 @@
         service: docker
         siteMonitor: https://plex.snorlax.media/
         container: plex
+        server: socket-proxy
         widget:
           type: tautulli
           url: http://tautulli:8181
@@ -55,6 +58,7 @@
         siteMonitor: https://overseerr.snorlax.media/
         service: docker
         container: overseerr
+        server: socket-proxy
         widget:
           type: overseerr
           url: http://overseerr:5055
@@ -66,6 +70,7 @@
         siteMonitor: https://sonarr.snorlax.media/
         service: docker
         container: sonarr
+        server: socket-proxy
         widget:
           type: sonarr
           url: http://sonarr:8989
@@ -77,6 +82,7 @@
         siteMonitor: https://radarr.snorlax.media/
         service: docker
         container: radarr
+        server: socket-proxy
         widget:
           type: radarr
           url: http://radarr:7878
@@ -88,6 +94,7 @@
         siteMonitor: https://bazarr.snorlax.media/
         service: docker
         container: bazarr
+        server: socket-proxy
         widget:
           type: bazarr
           url: http://bazarr:6767
@@ -100,6 +107,7 @@
         description: For torrent indexers
         siteMonitor: https://prowlarr.snorlax.media/
         container: prowlarr
+        server: socket-proxy
         widget:
           type: prowlarr
           url: http://prowlarr:9696
@@ -110,6 +118,7 @@
         description: For downloading torrents
         siteMonitor: https://qbittorrent.snorlax.media/
         container: qbittorrent
+        server: socket-proxy
         widget:
           type: qbittorrent
           url: http://qbittorrent:8123
@@ -121,6 +130,7 @@
         icon: caddy.png
         description: For reverse proxy
         container: caddy
+        server: socket-proxy
         widget:
           type: caddy
           url: http://proxy:32080
@@ -130,3 +140,4 @@
         description: For 2FA and SSO
         siteMonitor: https://auth.snorlax.media/
         container: auth
+        server: socket-proxy

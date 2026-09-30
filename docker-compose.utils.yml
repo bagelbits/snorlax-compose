@@ -26,6 +26,7 @@ services:
     logging: *logging
     networks:
       - apps
+      - docker-api
     security_opt:
       - no-new-privileges:true
     volumes:
@@ -33,6 +34,7 @@ services:
       - ./config/homepage/settings.yaml:/app/config/settings.yaml:ro
       - ./config/homepage/services.yaml:/app/config/services.yaml:ro
       - ./config/homepage/widgets.yaml:/app/config/widgets.yaml:ro
+      - ./config/homepage/docker.yaml:/app/config/docker.yaml:ro
       - /opt/public/images:/app/public/images
       - /media:/media
     environment:

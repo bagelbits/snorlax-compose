@@ -63,6 +63,7 @@ Run on the server in `/opt/dockerapps/docker-compose`. `$B` is the backup dir.
 ### 1. Prepare
 
 ```sh
+cd /opt/dockerapps/docker-compose   # every compose command below needs this dir
 B=/opt/dockerapps/authelia/backups; mkdir -p "$B"
 crontab -e          # comment out the deploy.sh line; re-enable in step 8
 docker pull postgres:18 && docker pull redis:8
@@ -87,6 +88,10 @@ docker compose exec -T database psql -U authelia -d authelia -Atc "
 
 docker compose exec -T database pg_dump -U authelia -d authelia -Fc > "$B/authelia-pg15.dump"
 ```
+
+A `database "authelia" has a collation version mismatch` warning on each
+connection is expected: the data dir predates the image's current glibc. It is
+harmless here, since the dump carries rows and the restore rebuilds indexes.
 
 Only the `authelia` database matters here. The role comes from
 `POSTGRES_USER`, so `pg_dumpall` would add nothing. If you would rather have
@@ -121,7 +126,16 @@ docker compose --env-file .env config -q
 ### 5. Start Postgres 18, restore
 
 ```sh
-docker compose up -d database          # wait for "healthy": docker compose ps database
+docker compose up -d database
+docker compose logs --tail=30 database
+```
+
+Wait for `PostgreSQL init process complete`, then a later
+`database system is ready to accept connections`. "healthy" alone is not
+enough: the healthcheck can pass on the temporary init server, and a restore
+run too early fails to connect or lands in a server that is then restarted.
+
+```sh
 docker compose exec -T database pg_restore -U authelia -d authelia \
   --no-owner --exit-on-error < "$B/authelia-pg15.dump"
 docker compose exec -T database psql -U authelia -d authelia -c "ANALYZE"
@@ -147,6 +161,10 @@ docker compose up -d            # recreates redis on 8; starts auth
 docker compose logs --tail=50 auth
 docker compose exec redis sh -c 'redis-server --version'
 ```
+
+`up -d` recreates any service whose config drifted since its last deploy, not
+just these. Check `docker compose ps` and each front-end. If one comes up
+with defaults or stale files, `docker compose up -d --force-recreate <svc>`.
 
 Sign in through Caddy. Everyone is logged out once (Redis sessions gone or
 reset). Confirm your TOTP/WebAuthn device still works, since that proves the

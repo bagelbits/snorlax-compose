@@ -1,0 +1,74 @@
+{
+  admin 0.0.0.0:32080 {
+    origins 172.16.0.0/12
+  }
+}
+
+auth.{$MY_DOMAIN} {
+  reverse_proxy auth:9091
+}
+
+(secure) {
+  forward_auth {args.0} auth:9091 {
+    uri /api/verify?rd=https://auth.{$MY_DOMAIN}
+    copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+  }
+}
+
+{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy homepage:3000
+}
+
+overseerr.{$MY_DOMAIN} {
+  reverse_proxy overseerr:5055
+}
+
+radarr.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy radarr:7878
+}
+
+scrutiny.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy scrutiny:8080
+}
+
+qbittorrent.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy qbittorrent:8123
+}
+
+plex.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy tautulli:8181
+}
+
+sonarr.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy sonarr:8989
+}
+
+prowlarr.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy prowlarr:9696
+}
+
+monitoring.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy monitoring:61208
+}
+
+bazarr.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy bazarr:6767
+}
+
+portainer.{$MY_DOMAIN} {
+  import secure *
+  reverse_proxy portainer:9443 {
+    transport http {
+      tls_insecure_skip_verify
+    }
+  }
+}

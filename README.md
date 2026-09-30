@@ -73,6 +73,15 @@ Read results with `tail /var/log/snorlax-deploy.log`.
 Keep main PR-only with CI required, since a merge deploys itself. Major
 bumps such as Postgres still need a manual migration.
 
+## Caddy
+
+config/caddy/Caddyfile is mounted read-only as a directory at /etc/caddy. Edit
+it here, merge, and reload after the deploy:
+
+    docker compose exec proxy caddy reload --config /etc/caddy/Caddyfile
+
+The old /opt/dockerapps/authelia/caddy/Caddyfile is no longer used.
+
 ## Scripts
 
 One-off helpers in scripts/, run inside a container with python3. Each

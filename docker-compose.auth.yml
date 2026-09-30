@@ -26,7 +26,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - /opt/dockerapps/authelia/caddy/data:/data
-      - /opt/dockerapps/authelia/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./config/caddy:/etc/caddy:ro
 
   auth:
     container_name: auth

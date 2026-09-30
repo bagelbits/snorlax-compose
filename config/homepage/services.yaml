@@ -28,7 +28,6 @@
         widget:
           type: scrutiny
           url: http://scrutiny:8080
-          key: "{{HOMEPAGE_VAR_SCRUTINY_KEY}}"
     - Portainer:
         icon: portainer.png
         container: portainer

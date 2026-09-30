@@ -14,7 +14,6 @@
         "docker-compose"
       ],
       "matchPackageNames": [
-        "*",
         "!caddy",
         "!authelia/authelia",
         "!postgres",

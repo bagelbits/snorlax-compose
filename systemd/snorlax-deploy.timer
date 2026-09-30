@@ -1,9 +1,0 @@
-[Unit]
-Description=Deploy snorlax-compose every 10 minutes
-
-[Timer]
-OnBootSec=2min
-OnUnitActiveSec=10min
-
-[Install]
-WantedBy=timers.target

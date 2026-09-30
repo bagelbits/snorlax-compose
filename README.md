@@ -61,15 +61,15 @@ Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
 ## Auto-deploy
 
 scripts/deploy.sh pulls main (fast-forward only), validates the config, and
-runs `docker compose up -d --remove-orphans`. A systemd timer runs it every
-10 minutes. Install on the server:
+runs `docker compose up -d --remove-orphans`. The host is Alpine (no
+systemd), so root's cron runs it every 10 minutes. Add with `crontab -e`:
 
-    sudo cp systemd/snorlax-deploy.* /etc/systemd/system/
-    sudo systemctl daemon-reload
-    sudo systemctl enable --now snorlax-deploy.timer
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    */10 * * * * flock -n /tmp/snorlax-deploy.lock /opt/dockerapps/docker-compose/scripts/deploy.sh >> /var/log/snorlax-deploy.log 2>&1
 
-The unit runs as root, so root needs read access to the git remote (for
-example a deploy key). Check runs with `journalctl -u snorlax-deploy`.
+Make sure crond starts at boot: `rc-update add crond && rc-service crond start`.
+Read results with `tail /var/log/snorlax-deploy.log`.
+
 Keep main PR-only with CI required, since a merge deploys itself. Major
 bumps such as Postgres still need a manual migration.
 

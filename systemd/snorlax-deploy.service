@@ -1,8 +1,0 @@
-[Unit]
-Description=Pull snorlax-compose main and apply it
-After=docker.service network-online.target
-Wants=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/opt/dockerapps/docker-compose/scripts/deploy.sh

@@ -26,7 +26,6 @@ services:
     logging: *logging
     networks:
       - apps
-      - docker-api
     security_opt:
       - no-new-privileges:true
     volumes:

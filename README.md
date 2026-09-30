@@ -49,10 +49,11 @@ Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
 
 - `auth` - Caddy, Authelia, Postgres, Redis. Caddy also joins `apps`.
 - `apps` - everything else.
-- `docker-api` - internal only: socket-proxy, Homepage, Glances. Only
-  socket-proxy (read-only, containers/images) touches the Docker socket, so
-  Homepage's docker.yaml must point at `socket-proxy:2375` instead of the
-  socket path.
+- `docker-api` - internal only: socket-proxy and Glances. socket-proxy
+  (read-only, containers/images) is the only thing besides Watchtower and
+  Portainer that touches the Docker socket. To enable Homepage's Docker
+  integration, add it to this network and set `host: socket-proxy`,
+  `port: 2375` in docker.yaml.
 - Caddy, Authelia, Postgres, Redis and Plex carry
   `com.centurylinklabs.watchtower.enable=false`. Caddy and Authelia are pinned
   to a major tag; Renovate opens PRs for bumps, and those get deployed by hand.

@@ -1,11 +1,36 @@
 ---
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 10m
+    max-file: "3"
+
 services:
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy:0.3
+    container_name: socket-proxy
+    logging: *logging
+    restart: unless-stopped
+    environment:
+      - CONTAINERS=1
+      - IMAGES=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - docker-api
+    security_opt:
+      - no-new-privileges:true
   homepage:
     image: gethomepage/homepage:latest
     container_name: homepage
+    logging: *logging
+    networks:
+      - apps
+      - docker-api
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - /opt/dockerapps/homepage:/app/config # Make sure your local config directory exists
-      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
       - /opt/public/images:/app/public/images
       - /media:/media
     environment:
@@ -16,6 +41,11 @@ services:
   watchtower:
     image: ghcr.io/nicholas-fedor/watchtower
     container_name: watchtower
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     user: 0:0
     environment:
       - TZ=America/Los_Angeles
@@ -31,6 +61,9 @@ services:
   unpackerr:
     image: golift/unpackerr
     container_name: unpackerr
+    logging: *logging
+    networks:
+      - apps
     volumes:
       - /media/torrents:/media/torrents
     restart: unless-stopped
@@ -53,19 +86,28 @@ services:
   monitoring:
     image: nicolargo/glances:latest
     container_name: monitoring
+    logging: *logging
+    networks:
+      - apps
+      - docker-api
+    security_opt:
+      - no-new-privileges:true
     restart: always
     pid: host
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       # Uncomment the below line if you want glances to display host OS detail instead of container's
       - /etc/os-release:/etc/os-release:ro
       - /opt/dockerapps/glances:/glances/conf
     environment:
       - "GLANCES_OPT=-w"
+      - DOCKER_HOST=tcp://socket-proxy:2375
       - TZ=America/Los_Angeles
   scrutiny:
     image: ghcr.io/analogj/scrutiny:master-omnibus
     container_name: scrutiny
+    logging: *logging
+    networks:
+      - apps
     user: 0:0
     cap_add:
       - SYS_RAWIO
@@ -90,6 +132,11 @@ services:
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - /opt/dockerapps/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
@@ -99,6 +146,16 @@ services:
   byparr:
     image: ghcr.io/thephaseless/byparr:latest
     container_name: byparr
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - TZ=America/Los_Angeles
     restart: unless-stopped
+
+networks:
+  apps: {}
+  docker-api:
+    internal: true

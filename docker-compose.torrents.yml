@@ -1,8 +1,19 @@
 ---
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 10m
+    max-file: "3"
+
 services:
   radarr:
     image: linuxserver/radarr:latest
     container_name: radarr
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1002
@@ -15,6 +26,11 @@ services:
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1002
@@ -27,6 +43,11 @@ services:
   qbittorrent:
     image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1002
@@ -43,6 +64,11 @@ services:
   prowlarr:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1002
@@ -54,6 +80,11 @@ services:
   bazarr:
     image: linuxserver/bazarr:latest
     container_name: bazarr
+    logging: *logging
+    networks:
+      - apps
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1002
@@ -64,3 +95,6 @@ services:
       - /media/tv:/media/tv
       - /media/movies:/media/movies
     restart: unless-stopped
+
+networks:
+  apps: {}

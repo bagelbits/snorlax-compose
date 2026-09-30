@@ -5,7 +5,7 @@ Docker Compose files for this homelab's stack, split by concern:
 - docker-compose.auth.yml     - Caddy, Authelia, Postgres, Redis
 - docker-compose.media.yml    - Plex, Tautulli, Overseerr
 - docker-compose.torrents.yml - Radarr, Sonarr, qBittorrent, Prowlarr, Bazarr
-- docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, Byparr
+- docker-compose.utils.yml    - Homepage, Watchtower, Unpackerr, Glances, Scrutiny, Portainer, Byparr, socket-proxy
 
 ## Env setup
 
@@ -44,6 +44,18 @@ Authelia's own secrets (JWT/session/storage keys, SMTP password) aren't in
 .env - they're file-based (AUTHELIA_*_FILE vars pointing under
 /opt/dockerapps/authelia/config/secrets/), managed on the host directly.
 Redis reads its password from the same REDIS_PASSWORD file Authelia uses.
+
+## Networks and updates
+
+- `auth` - Caddy, Authelia, Postgres, Redis. Caddy also joins `apps`.
+- `apps` - everything else.
+- `docker-api` - internal only: socket-proxy, Homepage, Glances. Only
+  socket-proxy (read-only, containers/images) touches the Docker socket, so
+  Homepage's docker.yaml must point at `socket-proxy:2375` instead of the
+  socket path.
+- Caddy, Authelia, Postgres, Redis and Plex carry
+  `com.centurylinklabs.watchtower.enable=false`. Caddy and Authelia are pinned
+  to a major tag; Renovate opens PRs for bumps, and those get deployed by hand.
 
 ## Scripts
 

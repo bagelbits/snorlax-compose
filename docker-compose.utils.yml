@@ -131,6 +131,7 @@ services:
       - no-new-privileges:true
     environment:
       - TZ=America/Los_Angeles
+      - BROWSER_LOCALE=en-US
     mem_limit: 2g
     restart: unless-stopped
 

@@ -7,7 +7,7 @@ x-logging: &logging
 
 services:
   socket-proxy:
-    image: tecnativa/docker-socket-proxy:0.3.0
+    image: tecnativa/docker-socket-proxy:v0.5.0@sha256:1f5038b54f06c3e18422902cf00ba21803d1c97805aae032e5e6673d532d3459
     container_name: socket-proxy
     logging: *logging
     restart: unless-stopped
@@ -21,7 +21,7 @@ services:
     security_opt:
       - no-new-privileges:true
   homepage:
-    image: gethomepage/homepage:v2.4.0
+    image: gethomepage/homepage:v2.4.0@sha256:643bd0be730d40f69d58028a55d1a896739333e8815786df42bc97f109ecbe61
     container_name: homepage
     logging: *logging
     networks:
@@ -51,7 +51,7 @@ services:
       - HOMEPAGE_VAR_QBITTORRENT_PASSWORD=${HOMEPAGE_VAR_QBITTORRENT_PASSWORD}
     restart: unless-stopped
   unpackerr:
-    image: golift/unpackerr:0.16.1
+    image: golift/unpackerr:0.16.1@sha256:244fc45cb207308f60e8f52dd703c2b3463385752de0f9517c58ff9d331ed15e
     container_name: unpackerr
     logging: *logging
     networks:
@@ -76,7 +76,7 @@ services:
     security_opt:
       - no-new-privileges:true
   monitoring:
-    image: nicolargo/glances:4.5.7
+    image: nicolargo/glances:4.5.7@sha256:28e4038aa2f2d635f4e6e1e3c7667ce4a808326cb918bba99b0041548b6e7425
     container_name: monitoring
     logging: *logging
     networks:
@@ -95,7 +95,7 @@ services:
       - DOCKER_HOST=tcp://socket-proxy:2375
       - TZ=America/Los_Angeles
   scrutiny:
-    image: ghcr.io/analogj/scrutiny:v0.9.5-omnibus
+    image: ghcr.io/analogj/scrutiny:v0.9.5-omnibus@sha256:6ee271ee531458f134220ca8b2c5c8ccc2711a799c827fef953fa865d91e312f
     container_name: scrutiny
     logging: *logging
     networks:
@@ -122,7 +122,7 @@ services:
       - /dev/sdf:/dev/sdf
       - /dev/sdg:/dev/sdg
   byparr:
-    image: ghcr.io/thephaseless/byparr:2.0.1
+    image: ghcr.io/thephaseless/byparr:2.1.0@sha256:01a46a2865d9a6db5eb8ead04ec0dd33b8fbe233e8565ae70b50d4cc0af4cfb0
     container_name: byparr
     logging: *logging
     networks:

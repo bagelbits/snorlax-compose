@@ -158,7 +158,7 @@ data restored.
 `tail /var/log/snorlax-deploy.log`.
 
 After a week of good behaviour, remove `postgres`, `postgres15-cold`, and the
-old dump.
+old dump: see [postgres-cleanup.md](postgres-cleanup.md).
 
 ## Rollback
 

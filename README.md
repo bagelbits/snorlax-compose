@@ -22,6 +22,7 @@ from a local .env file at deploy time.
 
 2. Fill in real values in .env:
 
+   - SMTP_USERNAME             - Authelia's SMTP login (password is a secrets file)
    - MY_DOMAIN                 - Caddy's domain, e.g. snorlax.media
    - POSTGRES_PASSWORD         - Postgres + Authelia storage
    - PLEX_CLAIM                - one-time claim token from plex.tv/claim, expires in ~4 min
@@ -85,6 +86,19 @@ Read results with `tail /var/log/snorlax-deploy.log`.
 
 Keep main PR-only with CI required, since a merge deploys itself. Major
 bumps such as Postgres still need a manual migration.
+
+## Authelia
+
+config/authelia/configuration.yml is mounted read-only over the host's
+/opt/dockerapps/authelia/config/configuration.yml. Secrets stay out of it
+(AUTHELIA_*_FILE env vars). users_database.yml and secrets/ stay on the host,
+since they hold password hashes and keys. deploy.sh restarts `auth` when the
+file changes, because Authelia does not reload its config.
+
+## Glances
+
+config/glances/glances.conf is mounted read-only as /glances/conf. deploy.sh
+restarts `monitoring` when it changes.
 
 ## Caddy
 

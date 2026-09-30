@@ -76,7 +76,7 @@ services:
     volumes:
       # Uncomment the below line if you want glances to display host OS detail instead of container's
       - /etc/os-release:/etc/os-release:ro
-      - /opt/dockerapps/glances:/glances/conf
+      - ./config/glances:/glances/conf:ro
     environment:
       - "GLANCES_OPT=-w"
       - DOCKER_HOST=tcp://socket-proxy:2375

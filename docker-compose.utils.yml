@@ -33,7 +33,7 @@ services:
       - /opt/public/images:/app/public/images
       - /media:/media
     environment:
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=info
       - TZ=America/Los_Angeles
       - HOMEPAGE_ALLOWED_HOSTS=${MY_DOMAIN}
     restart: unless-stopped
@@ -51,9 +51,6 @@ services:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_HTTP_API_ENDPOINTS=metrics
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN}
-      - WATCHTOWER_REMOVE_VOLUMES=true
-      - WATCHTOWER_INCLUDE_STOPPED=true
-      - WATCHTOWER_REVIVE_STOPPED=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
@@ -91,7 +88,7 @@ services:
       - docker-api
     security_opt:
       - no-new-privileges:true
-    restart: always
+    restart: unless-stopped
     pid: host
     volumes:
       # Uncomment the below line if you want glances to display host OS detail instead of container's
@@ -152,6 +149,7 @@ services:
       - no-new-privileges:true
     environment:
       - TZ=America/Los_Angeles
+    mem_limit: 2g
     restart: unless-stopped
 
 networks:

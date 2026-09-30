@@ -7,7 +7,7 @@ x-logging: &logging
 
 services:
   plex:
-    image: linuxserver/plex:1.43.4.10903-e5521bd8c-ls326
+    image: linuxserver/plex:1.43.4.10903-e5521bd8c-ls326@sha256:3f71bd6eb6a4478ac19b11c5d0ba9746a5eacad1976f9b99ed4a2c21767e57bb
     container_name: plex
     logging: *logging
     network_mode: host
@@ -31,7 +31,7 @@ services:
       retries: 3
       start_period: 60s
   tautulli:
-    image: linuxserver/tautulli:v2.18.2-ls245
+    image: linuxserver/tautulli:v2.18.2-ls245@sha256:9e7b476ef14ae44a043b446614b5354777605eb9cb2bdbb2dbd1f99df031ac17
     container_name: tautulli
     logging: *logging
     networks:

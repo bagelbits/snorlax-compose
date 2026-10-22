@@ -31,7 +31,7 @@ services:
       retries: 3
       start_period: 60s
   tautulli:
-    image: linuxserver/tautulli:v2.18.2-ls245@sha256:9e7b476ef14ae44a043b446614b5354777605eb9cb2bdbb2dbd1f99df031ac17
+    image: linuxserver/tautulli:v2.18.2-ls248@sha256:986125e67ab881504e6a71f93f8fe0932de0e1158f3060b53ca9d12ab38fa3be
     container_name: tautulli
     logging: *logging
     networks:

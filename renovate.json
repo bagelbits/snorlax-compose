@@ -4,6 +4,7 @@
     "config:recommended",
     "docker:pinDigests"
   ],
+  "assignees": ["bagelbits"],
   "timezone": "America/Los_Angeles",
   "schedule": [
     "before 6am on saturday"

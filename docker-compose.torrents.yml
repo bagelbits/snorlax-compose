@@ -30,7 +30,7 @@ services:
       retries: 3
       start_period: 60s
   sonarr:
-    image: linuxserver/sonarr:4.0.20.3014-ls326@sha256:f247545d23ba8b233d6604575347e48a623fe6ad75dda02348bf81917f3b5c06
+    image: linuxserver/sonarr:4.0.20.3014-ls329@sha256:44b06045a98bc1f237b9ffefc4b28dab64cb29305e4a2a94875ae93b5224e4cc
     container_name: sonarr
     logging: *logging
     networks:

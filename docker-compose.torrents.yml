@@ -80,7 +80,7 @@ services:
       retries: 3
       start_period: 60s
   prowlarr:
-    image: linuxserver/prowlarr:2.6.5.5623-ls162@sha256:f2b26429893d4c4cb71941b7ee50b1bdecd9d5f9f9e02d5410615e9f4f7c8d95
+    image: linuxserver/prowlarr:2.6.5.5623-ls164@sha256:4e992f9b9229bc8c97c666b10b042a7360bce1d99b196e8aa29fd9805849cbf1
     container_name: prowlarr
     logging: *logging
     networks:

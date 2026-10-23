@@ -57,6 +57,17 @@
       ],
       "automerge": true,
       "minimumReleaseAge": "3 days"
+    },
+    {
+      "matchPackageNames": [
+        "linuxserver/**"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "digest"
+      ],
+      "automerge": true,
+      "minimumReleaseAge": "3 days"
     }
   ]
 }

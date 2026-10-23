@@ -7,7 +7,7 @@ x-logging: &logging
 
 services:
   radarr:
-    image: linuxserver/radarr:6.4.4.10685-ls318@sha256:adb6c09d6b729ea5e642c99cea35af72702ef476bf4763f153299ac5db9f0b4f
+    image: linuxserver/radarr:6.4.4.10685-ls322@sha256:ff4430fe2d6159b4dbaac9903acfecee5aa68dec8c929259e2f3114c63f7a09e
     container_name: radarr
     logging: *logging
     networks:

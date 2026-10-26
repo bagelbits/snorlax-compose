@@ -112,6 +112,18 @@ are referenced as `{{HOMEPAGE_VAR_NAME}}` in the YAML. deploy.sh restarts
 config/glances/glances.conf is mounted read-only as /glances/conf. deploy.sh
 restarts `monitoring` when it changes.
 
+## Unpackerr
+
+Unpackerr v1 persists configuration and history in `/opt/dockerapps/unpackerr`.
+Its webserver is explicitly disabled for now; no UI route or host port is
+exposed. Existing Sonarr/Radarr environment settings and extraction timers
+remain unchanged.
+
+**Before merging the v1 upgrade**, prepare the writable appdata directory;
+merging auto-deploys. See
+[Unpackerr v1 upgrade](docs/unpackerr-v1-upgrade.md) for prerequisites,
+rollout checks and the conditions for enabling the UI later.
+
 ## Caddy
 
 config/caddy/Caddyfile is mounted read-only as a directory at /etc/caddy. Edit

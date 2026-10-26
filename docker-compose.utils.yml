@@ -51,17 +51,19 @@ services:
       - HOMEPAGE_VAR_QBITTORRENT_PASSWORD=${HOMEPAGE_VAR_QBITTORRENT_PASSWORD}
     restart: unless-stopped
   unpackerr:
-    image: golift/unpackerr:0.16.1@sha256:244fc45cb207308f60e8f52dd703c2b3463385752de0f9517c58ff9d331ed15e
+    image: golift/unpackerr:v1.0.0@sha256:95ed846fb79cc870c7d745acaebf7e49883a29c5625e4679f9a1aded6f283304
     container_name: unpackerr
     logging: *logging
     networks:
       - apps
     volumes:
+      - /opt/dockerapps/unpackerr:/config
       - /media/torrents:/media/torrents
     restart: unless-stopped
     user: 1000:1002
     environment:
       - TZ=America/Los_Angeles
+      - UN_WEBSERVER_LISTEN_ADDR=
       - UN_START_DELAY=10s
       - UN_RETRY_DELAY=2m
       - UN_MAX_RETRIES=3

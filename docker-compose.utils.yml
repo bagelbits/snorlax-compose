@@ -97,7 +97,7 @@ services:
       - DOCKER_HOST=tcp://socket-proxy:2375
       - TZ=America/Los_Angeles
   scrutiny:
-    image: ghcr.io/analogj/scrutiny:v0.9.5-omnibus@sha256:6ee271ee531458f134220ca8b2c5c8ccc2711a799c827fef953fa865d91e312f
+    image: ghcr.io/analogj/scrutiny:v0.10.0-omnibus@sha256:90062edac57a2bd891d641344184f5f730f19394b1124f6fc53904a3d8cb21c2
     container_name: scrutiny
     logging: *logging
     networks:

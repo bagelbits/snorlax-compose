@@ -66,7 +66,7 @@ services:
       - auth
     security_opt:
       - no-new-privileges:true
-    image: postgres:18@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81
+    image: postgres:18@sha256:2ea8630df176ad090ec92136dee850397c5af8781e4bcf2e4162593691c61bbc
     restart: unless-stopped
     volumes:
       # 18+ mounts the parent dir; PGDATA is /var/lib/postgresql/18/docker. Fresh dir on purpose.

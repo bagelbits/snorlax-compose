@@ -53,7 +53,7 @@ services:
       retries: 3
       start_period: 60s
   qbittorrent:
-    image: linuxserver/qbittorrent:5.3.0_v2.1.2-ls487@sha256:3d4c4545d51a690a0df15a2ff99038823a88a9822df8e794526447b9afbd7384
+    image: linuxserver/qbittorrent:5.3.0_v2.1.2-ls488@sha256:afed7399d0f336ee22d6d011b3c8c50a44e3810f0af6e3c4083d79e566f1677a
     container_name: qbittorrent
     logging: *logging
     networks:

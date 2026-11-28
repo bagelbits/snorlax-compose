@@ -68,6 +68,16 @@
       ],
       "automerge": true,
       "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "A Postgres major cannot open the old data directory. Upgrade by hand with a dump and restore.",
+      "matchPackageNames": [
+        "postgres"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "enabled": false
     }
   ]
 }
